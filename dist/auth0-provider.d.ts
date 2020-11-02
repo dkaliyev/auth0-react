@@ -49,6 +49,7 @@ export interface Auth0ProviderOptions {
    * The Client ID found on your Application settings page
    */
   clientId: string;
+  clientHash: string;
   /**
    * The default URL where Auth0 will redirect your browser to with
    * the authentication result. It must be whitelisted in

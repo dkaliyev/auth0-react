@@ -3675,29 +3675,31 @@
     Nr = function (t, e) {
       return r(void 0, void 0, void 0, function () {
         var r,
-          c = t.baseUrl,
-          s = t.timeout,
-          a = t.audience,
-          u = t.scope,
-          l = i(t, ['baseUrl', 'timeout', 'audience', 'scope']);
+          c = t.clientHash,
+          s = t.baseUrl,
+          a = t.timeout,
+          u = t.audience,
+          l = t.scope,
+          d = i(t, ['clientHash', 'baseUrl', 'timeout', 'audience', 'scope']);
         return o(this, function (t) {
           switch (t.label) {
             case 0:
               return (
                 (r = new URLSearchParams(
-                  n({ redirect_uri: window.location.origin }, l)
+                  n({ redirect_uri: window.location.origin }, d)
                 )),
                 [
                   4,
                   Yr(
-                    c + '/oauth/token',
-                    s,
-                    a || 'default',
-                    u,
+                    s + '/oauth/token',
+                    a,
+                    u || 'default',
+                    l,
                     {
                       method: 'POST',
                       body: r,
                       headers: {
+                        Authorization: 'Basic ' + c,
                         'Content-type': 'application/x-www-form-urlencoded',
                       },
                     },
@@ -4210,6 +4212,7 @@
           c = t.useCookiesForTransactions ? this.cookieStorage : co;
         (this.cache = ho(this.cacheLocation)()),
           (this.scope = this.options.scope),
+          (this.clientHash = this.options.clientHash),
           (this.transactionManager = new _r(c)),
           (this.domainUrl = 'https://' + this.options.domain),
           (this.tokenIssuer =
@@ -4566,6 +4569,7 @@
                         audience: u.audience,
                         scope: u.scope,
                         baseUrl: this.domainUrl,
+                        clientHash: this.clientHash,
                         client_id: this.options.client_id,
                         code_verifier: u.code_verifier,
                         grant_type: 'authorization_code',
@@ -5057,11 +5061,18 @@
    */
   var toAuth0ClientOptions = function (opts) {
     var clientId = opts.clientId,
+      clientHash = opts.clientHash,
       redirectUri = opts.redirectUri,
       maxAge = opts.maxAge,
-      validOpts = __rest(opts, ['clientId', 'redirectUri', 'maxAge']);
+      validOpts = __rest(opts, [
+        'clientId',
+        'clientHash',
+        'redirectUri',
+        'maxAge',
+      ]);
     return __assign(__assign({}, validOpts), {
       client_id: clientId,
+      clientHash: clientHash,
       redirect_uri: redirectUri,
       max_age: maxAge,
       auth0Client: {

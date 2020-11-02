@@ -67,6 +67,7 @@ export interface Auth0ProviderOptions {
    * The Client ID found on your Application settings page
    */
   clientId: string;
+  clientHash: string;
   /**
    * The default URL where Auth0 will redirect your browser to with
    * the authentication result. It must be whitelisted in
@@ -145,10 +146,11 @@ declare const __VERSION__: string;
 const toAuth0ClientOptions = (
   opts: Auth0ProviderOptions
 ): Auth0ClientOptions => {
-  const { clientId, redirectUri, maxAge, ...validOpts } = opts;
+  const { clientId, clientHash, redirectUri, maxAge, ...validOpts } = opts;
   return {
     ...validOpts,
     client_id: clientId,
+    clientHash: clientHash,
     redirect_uri: redirectUri,
     max_age: maxAge,
     auth0Client: {
