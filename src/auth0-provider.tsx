@@ -218,7 +218,10 @@ const Auth0Provider = (opts: Auth0ProviderOptions): JSX.Element => {
           const { appState } = await client.handleRedirectCallback();
           onRedirectCallback(appState);
         } else {
-          await client.checkSession({ ignoreCache: false });
+          await client.checkSession({
+            ignoreCache: false,
+            timeoutInSeconds: 1,
+          });
         }
         const user = await client.getUser();
         dispatch({ type: 'INITIALISED', user });

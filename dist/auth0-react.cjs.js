@@ -5101,7 +5101,10 @@ var Auth0Provider = function (opts) {
               case 2:
                 return [
                   4 /*yield*/,
-                  client.checkSession({ ignoreCache: false }),
+                  client.checkSession({
+                    ignoreCache: false,
+                    timeoutInSeconds: 1,
+                  }),
                 ];
               case 3:
                 _a.sent();
