@@ -218,7 +218,7 @@ const Auth0Provider = (opts: Auth0ProviderOptions): JSX.Element => {
           const { appState } = await client.handleRedirectCallback();
           onRedirectCallback(appState);
         } else {
-          await client.checkSession();
+          await client.checkSession({ ignoreCache: false });
         }
         const user = await client.getUser();
         dispatch({ type: 'INITIALISED', user });
@@ -266,6 +266,7 @@ const Auth0Provider = (opts: Auth0ProviderOptions): JSX.Element => {
     async (opts?: GetTokenSilentlyOptions): Promise<string> => {
       let token;
       try {
+        if (opts) opts.ignoreCache = false;
         token = await client.getTokenSilently(opts);
       } catch (error) {
         throw tokenError(error);

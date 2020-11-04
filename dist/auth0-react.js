@@ -5148,7 +5148,10 @@
                   onRedirectCallback(appState);
                   return [3 /*break*/, 4];
                 case 2:
-                  return [4 /*yield*/, client.checkSession()];
+                  return [
+                    4 /*yield*/,
+                    client.checkSession({ ignoreCache: false }),
+                  ];
                 case 3:
                   _a.sent();
                   _a.label = 4;
@@ -5228,6 +5231,7 @@
             switch (_a.label) {
               case 0:
                 _a.trys.push([0, 2, , 3]);
+                if (opts) opts.ignoreCache = false;
                 return [4 /*yield*/, client.getTokenSilently(opts)];
               case 1:
                 token = _a.sent();
